@@ -9,7 +9,7 @@ module base() {
 }
 //Holder Withlout subtraction for rod
 module holder() {
-	translate([0,0,Base_Height]) cylinder (h=40, r1 = 11, r2 = 9);
+	translate([0,0,Base_Height]) cylinder (h=26, r1 = 11, r2 = 9);
 }
 
 //Entire Assembly without subtraction for rod
