@@ -1,19 +1,18 @@
-
-IPHONE_WIDTH = 9.3;
+Base_Height = 7;
 
 module base() {
 	hull() {
 		cube(size = [32,32,1], center = true);
- 		translate([0,0,7]) cube(size = [23,23,1], center = true);
+ 		translate([0,0,Base_Height]) cube(size = [23,23,1], center = true);
 	}
 }
 
-module holder(width) {
-	difference() {
-		cube(size= [width * 2, width * 1.5, width * 1.5], center = true);
-		cube(size = [width, width * 2, width * 1.5], center = true);
+module holder() {
+	difference(){
+		translate([0,0,Base_Height]) cylinder (h=40, r1 = 11, r2 = 9);
+		translate([0,0,Base_Height+5]) cylinder(h=50, r=7.25);
 	}
 }
 
 base();
-translate ([0,0,IPHONE_WIDTH]) holder(IPHONE_WIDTH);
+holder(Base_Height);
