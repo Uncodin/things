@@ -1,18 +1,25 @@
 Base_Height = 7;
 
+//Tripod Base
 module base() {
 	hull() {
 		cube(size = [32,32,1], center = true);
  		translate([0,0,Base_Height]) cube(size = [23,23,1], center = true);
 	}
 }
-
+//Holder Withlout subtraction for rod
 module holder() {
-	difference(){
-		translate([0,0,Base_Height]) cylinder (h=40, r1 = 11, r2 = 9);
-		translate([0,0,Base_Height+5]) cylinder(h=50, r=7.25);
-	}
+	translate([0,0,Base_Height]) cylinder (h=40, r1 = 11, r2 = 9);
 }
 
-base();
-holder(Base_Height);
+//Entire Assembly without subtraction for rod
+module assembly(){
+	base();
+	holder();
+}
+
+//Diffrence of the assembly and the rod so that is goes into the base a bit.
+difference (){
+	assembly();
+	translate([0,0,Base_Height-5]) cylinder(h=50, r=7.25);
+}
