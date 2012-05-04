@@ -1,4 +1,4 @@
-Base_Height = 7;
+Base_Height = 8.5;
 
 //Tripod Base
 module base() {
@@ -21,5 +21,5 @@ module assembly(){
 //Diffrence of the assembly and the rod so that is goes into the base a bit.
 difference (){
 	assembly();
-	translate([0,0,Base_Height-5]) cylinder(h=50, r=7.25);
+	translate([0,0,Base_Height-5]) cylinder(h=50, r=6.5);
 }
