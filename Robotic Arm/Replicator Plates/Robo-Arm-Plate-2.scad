@@ -14,4 +14,4 @@ translate([0,65,0]) import("../Individual Parts/wristclampplate-fixed.stl");
 
 translate([0,35,0]) import("../Individual Parts/wristservoplate-fixed.stl");
 
-translate([0,35,2.9]) import("../Individual Parts/Upperarm-fixed.stl");
+rotate([0,180,0]) translate([-185,35,-1.3]) import("../Individual Parts/Upperarm-fixed.stl");
