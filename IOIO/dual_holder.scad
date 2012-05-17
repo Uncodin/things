@@ -1,4 +1,9 @@
 
+BoxHeight = 32;
+BoxWidth = 100;
+BoxLength = 75;
+ScrewHoleRadius = 5;
+
 module ioio() {
 	for(i = [ [ 31.25,  12.5,  0],
 		[31.25, -12.5, 0],
@@ -24,38 +29,51 @@ module dual_holder() {
 }
 
 
-//color("SteelBlue") dual_holder();
+//translate([7,0,0]) color("SteelBlue") dual_holder();
 
 difference() {
-	translate([0,-32.5,0]) cube(size=[69,3,9], center=true);
-	dual_holder();
+	translate([7,-32.5,0]) cube(size=[69,3,9], center=true);
+	translate([7,0,0]) dual_holder();
 }
 difference() {
-	translate([0,32.5,0]) cube(size=[69,3,9], center=true);
-	dual_holder();
+	translate([7,32.5,0]) cube(size=[69,3,9], center=true);
+	translate([7,0,0]) dual_holder();
 }
+
+//translate([-37,0,10]) color("orange") cube(size=[18,52.5,26.5], center=true);
+
 
 difference() {
 	difference() {
 		difference() {
-			difference() {
-				translate([0,0,23/2-4.5]) cube(size=[75,75,23], center=true);
-				translate([0,0,23/2-1.5]) cube(size=[69,68,23], center=true);		
-			}	
-			translate([36,-15,12.1]) cube([5,15,8], center=true);
-		}
-		translate([36,15,12.1]) cube([5,15,8], center=true);
+			translate([0,0,BoxHeight/2-4.5]) cube(size=[BoxWidth,BoxLength,BoxHeight], center=true);
+			translate([0,0,BoxHeight/2-1.5]) cube(size=[BoxWidth-6,BoxLength-7,BoxHeight], center=true);		
+		}	
+		translate([BoxWidth/2,-15,12.1]) cube([7,15,8], center=true);
 	}
-	translate([-36,0,23/2-1.5]) cube(size=[7,68,23], center=true);
+	translate([BoxWidth/2,15,12.1]) cube([7,15,8], center=true);
 }
 
-difference() {
-difference() {
-difference() {
-	translate([0,0,-2]) cube(size=[80,80,5], center=true);
-	translate([0,0,-2]) cube(size=[76,76,6], center=true);
+
+//top mounts
+for(i = [ [ BoxWidth / 2 - ScrewHoleRadius,  BoxLength / 2 - ScrewHoleRadius,  BoxHeight/2-4.5],
+	[BoxWidth / 2 - ScrewHoleRadius, -1 * BoxLength / 2 + ScrewHoleRadius, BoxHeight/2-4.5],
+	[-1 *BoxWidth / 2 + ScrewHoleRadius, BoxLength / 2 - ScrewHoleRadius, BoxHeight/2-4.5],
+	[-1 * BoxWidth / 2 + ScrewHoleRadius, -1 * BoxLength / 2 + ScrewHoleRadius, BoxHeight/2-4.5]])
+{
+	translate(i) 
+	cylinder(r=ScrewHoleRadius, h=BoxHeight, center=true);
 }
-translate([0,0,-2]) cube(size=[85,62,6], center=true);
-}
-translate([0,0,-2]) cube(size=[62,85,6], center=true);
+
+
+//heat shields
+difference() {
+	difference() {
+		difference() {
+			translate([0,0,-2]) cube(size=[BoxWidth+5,BoxLength+5,5], center=true);
+			translate([0,0,-2]) cube(size=[BoxWidth+2,BoxLength+2,6], center=true);
+		}
+		translate([0,0,-2]) cube(size=[BoxWidth+6,BoxLength-15,6], center=true);
+	}
+	translate([0,0,-2]) cube(size=[BoxLength+5,BoxLength+6,6], center=true);
 }
