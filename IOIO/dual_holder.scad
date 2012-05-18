@@ -4,6 +4,12 @@ BoxWidth = 100;
 BoxLength = 75;
 ScrewHoleRadius = 5;
 
+m3_size = 3;
+m3_nut_size = 6;
+
+// ratio for converting diameter to apothem
+da6 = 1 / cos(180 / 6) / 2;
+
 CoverHoles = [ [ BoxWidth / 2 - ScrewHoleRadius,  BoxLength / 2 - ScrewHoleRadius,  BoxHeight/2-4.5],
 	[BoxWidth / 2 - ScrewHoleRadius, -1 * BoxLength / 2 + ScrewHoleRadius, BoxHeight/2-4.5],
 	[-1 *BoxWidth / 2 + ScrewHoleRadius, BoxLength / 2 - ScrewHoleRadius, BoxHeight/2-4.5],
@@ -69,8 +75,8 @@ union() {
 }
 
 for (i = CoverHoles) {
-	#translate([0,0,-1 * BoxHeight/2 + 1]) translate(i) cylinder(r=2.25, h=4, center=true, $fn=6);
-	translate(i) cylinder(r=1.5, h=BoxHeight + 1, center=true);
+	#translate([0,0,-1 * BoxHeight/2 + 4]) translate(i) cylinder(r=m3_nut_size * da6, h=10, center=true, $fn=6);
+	translate(i) cylinder(r=m3_size * da6, h=BoxHeight + 1, center=true, $fn = 6);
 }
 }
 
