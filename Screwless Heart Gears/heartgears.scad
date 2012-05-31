@@ -6,9 +6,9 @@ include <../lib/pins.scad>// tbuser's Thing:10541
 //gear2();// render each gear (1 to 8)
 //fourgears();// render small gears on a plate (1,3,5,7)
 //rotate([0,90-theta,0])center();// render central block
-pin1();translate([12,0,0])pin2();// render pins
+//pin1();translate([12,0,0])pin2();// render pins
 //twogears();// check two-gear meshing
-//complete();// render total assembly (slow)
+complete();// render total assembly (slow)
 
 // get heart.stl from emmett's Thing:6190
 hs=100;// heart size (width)
