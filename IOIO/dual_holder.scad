@@ -95,10 +95,10 @@ module top() {
 		}
 	}
 	//heat shields
-	for (i = CoverHoles) {
-		translate([0,0,-1 * BoxHeight/2 + 2]) translate(i) cylinder(r=20, h=1);
-	}
+	//for (i = CoverHoles) {
+	//	translate([0,0,-1 * BoxHeight/2 + 2]) translate(i) cylinder(r=20, h=1);
+	//}
 }
 
 translate([0,0,BoxHeight]) top();
-bottom();
+//bottom();
