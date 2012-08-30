@@ -1,3 +1,5 @@
+include <pivothead_recon.scad> 
+
 RECON_HEIGHT = 11;
 RECON_START_WIDTH = 46;
 RECON_END_WIDTH = 49;
@@ -45,6 +47,7 @@ module clip() {
 	#translate([RECON_START_WIDTH - (CLIP_THICKNESS / 2),2,0]) cube([4,1,RECON_HEIGHT]);
 
 }
-
+//Magic!!!!!
 //recon();
-clip();
+translate([-37,19.5,-40]) rotate([90,-45,0]) translate([15,0,0]) clip();
+PivotHead();
