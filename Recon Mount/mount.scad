@@ -9,6 +9,8 @@ CLIP_LENGTH = 17;
 CLIP_DEPTH = 6;
 CLIP_THICKNESS = 3;
 
+RECON_BUMP_WIDTH = RECON_END_WIDTH - (CLIP_DEPTH * 2);
+
 module recon() {
 	hull() {
 		translate([(RECON_END_WIDTH - RECON_START_WIDTH) / 2,-1,0]) cube([RECON_START_WIDTH, 1, RECON_HEIGHT]);
@@ -21,7 +23,7 @@ module recon() {
 
 module clip() {
 
-	RECON_BUMP_WIDTH = RECON_END_WIDTH - (CLIP_DEPTH * 2);
+	
 
 	difference() {
 		translate([(-1*CLIP_THICKNESS) / 2, 0, (-1*CLIP_THICKNESS) / 2]) 
@@ -39,7 +41,7 @@ module clip() {
 				translate([0,0,RECON_HEIGHT + CLIP_THICKNESS]) sphere(r=1, $fn=20);
 				}
 			}
-			#translate([CLIP_DEPTH + (CLIP_THICKNESS / 2),-5,CLIP_THICKNESS]) cube([RECON_BUMP_WIDTH, CLIP_LENGTH + 10, RECON_HEIGHT + CLIP_THICKNESS]);	
+			translate([CLIP_DEPTH + (CLIP_THICKNESS / 2),-5,CLIP_THICKNESS]) 				cube([RECON_BUMP_WIDTH, CLIP_LENGTH + 10, RECON_HEIGHT + CLIP_THICKNESS]);	
 		}
 		recon();
 	}
@@ -47,7 +49,20 @@ module clip() {
 	#translate([RECON_START_WIDTH - (CLIP_THICKNESS / 2),2,0]) cube([4,1,RECON_HEIGHT]);
 
 }
-//Magic!!!!!
-//recon();
-translate([-37,19.5,-40]) rotate([90,-45,0]) translate([15,0,0]) clip();
-PivotHead();
+
+difference() {
+	rotate([10,0,0]) translate([0,0,19.5]) {
+		rotate([0,-130,0]) {
+			difference() {
+				union() {
+					translate([-37,19.5,-40]) rotate([100,-50,0]) translate([15,0,0]) clip();
+					PivotHead();
+				}
+				#translate([-37,19.5,-40]) rotate([100,-50,0]) translate([15,0,0]) translate([CLIP_DEPTH + (CLIP_THICKNESS / 2),-30,CLIP_THICKNESS]) cube([RECON_BUMP_WIDTH, CLIP_LENGTH + 40, RECON_HEIGHT + CLIP_THICKNESS]);
+			}
+		}
+	}
+	#cube([200,200,5], center=true);
+}
+
+
