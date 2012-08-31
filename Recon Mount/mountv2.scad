@@ -51,15 +51,24 @@ module clip() {
 }
 
 difference() {
-	union() {
-		rotate([90,-90,0]){ //Stand up & Flip -- Clip
-			translate([-40,-10.5,-20]){  //This shit is fucked up
-				clip();
+translate([0,0,11]) {
+rotate([-10,-0.1,0]) {
+rotate([0,80,0]) {
+	difference() {
+		union() {
+			rotate([95,-80,5]){ //Stand up & Flip -- Clip
+				translate([-40,-10.5,-20]){  //This shit is fucked up
+					clip();
+				}
 			}
+			PivotHead();
 		}
-		PivotHead();
+		translate([-20,0,-20]){
+			#cube([40,10,25]);
+		}
 	}
-	translate([-20,0,-20]){
-		#cube([40,10,25]);
-	}
+}
+}
+}
+# translate([-100,-100,-5]) cube([200,200,5]);
 }
