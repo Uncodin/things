@@ -1,13 +1,18 @@
 //Auto Tilter
 use <../lib/gears.scad>
 
+SERVO_HEIGHT = 23.5;
+SERVO_WIDTH = 23;
+SERVO_DEPTH = 11.5;
+
+BAR_HEIGHT = 24.33;
+BAR_WIDTH = 25.75;
+
 //Blind Hardware
 //================
 
 module bar(){
-	width = 25.75;
-	height = 24.33;
-	cube(size = [300,width,height]);
+	cube(size = [300,BAR_WIDTH,BAR_HEIGHT]);
 }
 
 module WandTilter(){
@@ -28,18 +33,71 @@ module BlindAssembly(){
 	WandTilter();
 }
 
+module servoGear() {
+	translate([0,-12 * 400 / 180,0]){
+		rotate([0,0,360/24]) {
+			gear (number_of_teeth=12,
+				circular_pitch=400,
+				hub_diameter=0);
+		}
+	}
+}
+
+module servo() {
+	union() {
+	translate([5.5,5.5,-3]) {
+		union() {
+			for (a =[0:1]) rotate([0,0,90*a]) 
+				difference() {
+				hull() for(b = [0:1]) mirror([0 ,b, 0]) translate([0,8.5,0]) cylinder(r=1.5, h=0.9);
+				for(b = [0:1]) mirror([0 ,b, 0]) translate([0,8.5,0]) cylinder(r=0.4, h=1);
+			}
+			cylinder(h=3, r=2.75);
+		}
+	}
+	cube(size= [SERVO_WIDTH, SERVO_DEPTH, SERVO_HEIGHT]);
+	translate([-(32.5 - SERVO_WIDTH) / 2,0,0]) cube([32.5,SERVO_DEPTH,SERVO_HEIGHT - 17]);
+	}
+}
+
 //Gears
 //================
 module WandGear(){
 	difference(){
-		translate([0,0,1])gear (circular_pitch=200,
-		      gear_thickness = 2,
-		      rim_thickness = 2,
-		      bore_diameter = 0,
-		      hub_thickness = 2,
-		      circles=0);
+		gear (number_of_teeth=12,
+			circular_pitch=400,
+			hub_diameter=0);
 		WandTilter();
 	}
 }
-//WandTilter();
-WandGear();
+
+module gearAssembly() {
+	rotate([-45,0,0]) translate([0 ,0,-25]) {
+	translate([12 * 400 / 180 / 2,0,0]) {
+		WandTilter();
+		WandGear();
+		servoGear();
+	}
+	translate([8,-(SERVO_DEPTH /2) - (12 * 400 / 180), 11]) servo();
+};
+}
+
+module clip() {
+	difference() {
+		union() {
+			translate([0,-15,5]) cube([SERVO_WIDTH + 20,30,BAR_HEIGHT]);
+			translate([0,0,14.33]) cube([SERVO_WIDTH + 20,30,15]);
+			translate([0,-30,10.33]) cube([(32.5 - SERVO_WIDTH) - 2,20,19]);
+			translate([SERVO_WIDTH + 8,-30,10.33]) cube([(32.5 - SERVO_WIDTH) - 2,20,19]);
+		}
+		translate([(SERVO_WIDTH +10)/ 2 - 10,-16,-10]) cube([25,20,50]);
+		bar();
+		gearAssembly();
+	}
+}
+
+//bar();
+//gearAssembly();
+clip();
+
+
