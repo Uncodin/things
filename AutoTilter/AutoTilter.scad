@@ -8,6 +8,9 @@ SERVO_DEPTH = 11.5;
 BAR_HEIGHT = 24.33;
 BAR_WIDTH = 25.75;
 
+WAND_LENGTH = 28.13;
+WAND_RADIUS = 2.75;
+
 //Blind Hardware
 //================
 
@@ -19,10 +22,8 @@ module WandTilter(){
 	$fa = 1;
 	$fs = 0.1;
 	$fn = 40;
-	height = 28.13;
-	radius = 2.75;
 	difference(){
-		cylinder(h=height, r = radius);
+		cylinder(h=WAND_LENGTH, r = WAND_RADIUS);
 		translate([-.4,1,0]) cube (size = [3.2,2.0,12.4]);
 		translate([-.4,-3,0]) cube (size = [3.2,2.0,12.4]);
 	}
@@ -96,8 +97,8 @@ module clip() {
 	}
 }
 
-//bar();
-//gearAssembly();
+bar();
+gearAssembly();
 clip();
 
 
