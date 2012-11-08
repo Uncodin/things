@@ -38,7 +38,9 @@ module servoGear() {
 		rotate([0,0,360/24]) {
 			gear (number_of_teeth=12,
 				circular_pitch=400,
-				hub_diameter=0);
+				hub_diameter=15,
+				hub_thickness=8,
+				bore_diameter=6);
 		}
 	}
 }
@@ -66,13 +68,14 @@ module WandGear(){
 	difference(){
 		gear (number_of_teeth=12,
 			circular_pitch=400,
-			hub_diameter=0);
+			hub_diameter=0,
+			bore_diameter=0);
 		WandTilter();
 	}
 }
 
 module gearAssembly() {
-	rotate([-45,0,0]) translate([0 ,0,-25]) {
+	rotate([-15,0,0]) translate([0 , 5,-25]) {
 	translate([12 * 400 / 180 / 2,0,0]) {
 		WandTilter();
 		WandGear();
@@ -85,12 +88,10 @@ module gearAssembly() {
 module clip() {
 	difference() {
 		union() {
-			translate([0,-15,5]) cube([SERVO_WIDTH + 20,30,BAR_HEIGHT]);
+			translate([0,-35,5 - 10]) cube([SERVO_WIDTH + 20,35,BAR_HEIGHT + 10]);
 			translate([0,0,14.33]) cube([SERVO_WIDTH + 20,30,15]);
-			translate([0,-30,10.33]) cube([(32.5 - SERVO_WIDTH) - 2,20,19]);
-			translate([SERVO_WIDTH + 8,-30,10.33]) cube([(32.5 - SERVO_WIDTH) - 2,20,19]);
 		}
-		translate([(SERVO_WIDTH +10)/ 2 - 10,-16,-10]) cube([25,20,50]);
+		translate([(SERVO_WIDTH +10)/ 2 - 10,-36,-10]) cube([25,60,50]);
 		bar();
 		gearAssembly();
 	}
@@ -99,5 +100,6 @@ module clip() {
 //bar();
 //gearAssembly();
 clip();
-
+//WandGear();
+//servoGear();
 
